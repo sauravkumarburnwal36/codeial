@@ -6,6 +6,9 @@ const app= express();
 //To define the port to run the server
 const port= 8000;
 
+//use express.router-->middleware
+app.use('/',require('./routes'));//by default ./routes/index.js
+
 //What need to be done when server is fired
 app.listen(port,function(err){
     if(err){
