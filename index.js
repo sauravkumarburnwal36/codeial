@@ -8,13 +8,17 @@ const port= 8000;
 
 //to require layout library
 const expressLayouts=require('express-ejs-layouts');
+//to use static files
+app.use(express.static('./assets'));
 app.use(expressLayouts);
-//use express.router-->middleware
-app.use('/',require('./routes'));//by default ./routes/index.js
 
 //setup the view engine
 app.set('view engine','ejs');
 app.set('views','./views');
+
+//use express.router-->middleware
+app.use('/',require('./routes'));//by default ./routes/index.js
+
 
 //What need to be done when server is fired
 app.listen(port,function(err){
