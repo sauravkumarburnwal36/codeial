@@ -6,6 +6,9 @@ const app= express();
 //To define the port to run the server
 const port= 8000;
 
+//to require layout library
+const expressLayouts=require('express-ejs-layouts');
+app.use(expressLayouts);
 //use express.router-->middleware
 app.use('/',require('./routes'));//by default ./routes/index.js
 
