@@ -9,6 +9,10 @@ const port= 8000;
 //use express.router-->middleware
 app.use('/',require('./routes'));//by default ./routes/index.js
 
+//setup the view engine
+app.set('view engine','ejs');
+app.set('views','./views');
+
 //What need to be done when server is fired
 app.listen(port,function(err){
     if(err){
