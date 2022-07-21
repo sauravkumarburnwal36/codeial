@@ -1,6 +1,9 @@
 //To require express
 const express= require('express');
 
+//to require cookie-parser library->to create and update the cookies
+const cookieParser= require('cookie-parser');
+
 //To acquire the functionalities of express libraries
 const app= express();
 //To define the port to run the server
@@ -9,6 +12,11 @@ const port= 8000;
 //to require layout library
 const expressLayouts=require('express-ejs-layouts');
 const db= require('./config/mongoose');
+
+//to read through post requests
+app.use(express.urlencoded());
+//to setup cookieparser library
+app.use(cookieParser());
 //to use static files
 app.use(express.static('./assets'));
 app.use(expressLayouts);
