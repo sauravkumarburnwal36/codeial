@@ -12,8 +12,9 @@ console.log('router loaded');
 //to acces home function lies under home_controller
 router.get('/',homeController.home);
 router.use('/users',require('./users'));
-
+router.use('/posts',require('./posts'));
+router.use('/comments',require('./comments'));
 //for any other routers,access from here
 //router.use('/routerName',require('/routerFile'));
 
-module.exports=router;
+module.exports= router;
