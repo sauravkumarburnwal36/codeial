@@ -1,10 +1,25 @@
 //to require users schema
 const User= require('../models/user');
 module.exports.profile= function(req,res){
-   return res.render('user_profile',{
-    title:'User Profile'
+   User.findById(req.params.id,function(err,users){
+      return res.render('user_profile',{
+         title:'User Profile',
+        profile_user: users
    });
+});
+   
 };
+
+//update the profile
+module.exports.update= function(req,res){
+   if(req.user.id == req.params.id){
+      User.findByIdAndUpdate(req.params.id,req.body,function(err,users){
+         return res.redirect('back');
+      });
+   }else{
+      return res.status(401).send('Unauthorized');
+   }
+}
 
 //render sign in page
 module.exports.signIn= function(req,res){
