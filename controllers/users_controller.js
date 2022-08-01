@@ -14,9 +14,11 @@ module.exports.profile= function(req,res){
 module.exports.update= function(req,res){
    if(req.user.id == req.params.id){
       User.findByIdAndUpdate(req.params.id,req.body,function(err,users){
+         req.flash('success','Updated!!!');
          return res.redirect('back');
       });
    }else{
+      req.flash('error','Unauthorized!!!');
       return res.status(401).send('Unauthorized');
    }
 }
@@ -49,23 +51,25 @@ module.exports.signUp= function(req,res){
 module.exports.create= function(req,res){
    //to check if password and confirm password are same or not
    if(req.body.password!=req.body.confirm_password){
+      req.flash('error','Password do not match');
       return res.redirect('back');
    }
    User.findOne({email:req.body.email},function(err,user){
       if(err){
-         console.log('error in finding user in signing up');
+         req.flash('error',err);
          return;
       }
       //if user is not found
       if(!user){
          User.create(req.body,function(err,user){
             if(err){
-               console.log('error in creating user while signing up');
+               req.flash('error',err);
                return;
             }
             return res.redirect('/users/sign-in');
          })
       }else{
+         req.flash('success',"You have signed up,log in to continue!!!");
          return res.redirect('back');
       }
    });
@@ -74,13 +78,14 @@ module.exports.create= function(req,res){
 //sign in and create session for the user
 module.exports.createSession= function(req,res){
    //TODO Later
-   return res.redirect('/');
+   req.flash('success',"Logged In Successfully");
    return res.redirect('/');
 };
 module.exports.destroySession = function (req, res) {
    req.logout(function (err) {
+   req.flash('success',"You have logged out!");
      if (err) {
-       console.log("error in logout", err);
+       req.flash('error',err);
        return;
      }
      return res.redirect("/");
